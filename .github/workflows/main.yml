@@ -21,7 +21,8 @@ jobs:
           # Copy all files from the extension directory to the build directory
           # cp -r * build/
           rsync -av --progress * build --exclude build
-
+          sudo apt-get install zip
+          zip -qq -r build/build.zip build
       # Pack the extension as a CRX file using webext-buildtools-chrome-crx-action
       - name: Pack the extension as a CRX file
         uses: cardinalby/webext-buildtools-chrome-crx-action@v2
