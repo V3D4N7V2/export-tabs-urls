@@ -19,7 +19,7 @@ jobs:
           # Create a build directory
           mkdir build
           # Copy all files from the extension directory to the build directory
-          cp -r export-tabs-urls/* build/
+          cp -r * build/
 
       # Pack the extension as a CRX file using webext-buildtools-chrome-crx-action
       - name: Pack the extension as a CRX file
