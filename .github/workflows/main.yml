@@ -1,0 +1,37 @@
+# This workflow will pack your extension as a CRX file and upload it as an artifact
+name: Pack Extension
+
+# Trigger the workflow on push or pull request
+on: [push, pull_request]
+
+jobs:
+  # This job will run on ubuntu-latest
+  pack:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out the repository
+      - uses: actions/checkout@v2
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Build the extension
+      - name: Build the extension
+        run: npm run build
+
+      # Pack the extension as a CRX file using webext-buildtools-chrome-crx-action
+      - name: Pack the extension as a CRX file
+        uses: cardinalby/webext-buildtools-chrome-crx-action@v2
+        with:
+          zipFilePath: 'build/extension.zip'
+          crxFilePath: 'build/extension.crx'
+          privateKey: ${{ secrets.CHROME_CRX_PRIVATE_KEY }}
+
+      # Upload the CRX file as an artifact
+      - name: Upload the CRX file as an artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: extension.crx
+          path: build/extension.crx
