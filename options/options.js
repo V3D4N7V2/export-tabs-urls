@@ -1,91 +1,101 @@
-var optionsFormatCustom, optionsIgnoreNonHTTP, optionsIgnorePinned, optionsButtonResetFormat, optionsFilterTabs, optionsCustomHeader, optionsButtonResetHeader
+var optionsFormatCustom,
+  optionsIgnoreNonHTTP,
+  optionsIgnorePinned,
+  optionsButtonResetFormat,
+  optionsFilterTabs,
+  optionsCustomHeader,
+  optionsButtonResetHeader;
 
-w.addEventListener('load', function () {
-  optionsIgnoreNonHTTP = d.getElementById('options-ignore-non-http')
-  optionsIgnorePinned = d.getElementById('options-ignore-pinned')
-  optionsFormatCustom = d.getElementById('options-format-custom')
-  optionsButtonResetFormat = d.getElementById('options-button-reset-format')
-  optionsFilterTabs = d.getElementById('options-filter-tabs')
-  optionsCustomHeader = d.getElementById('options-custom-header')
-  optionsButtonResetHeader = d.getElementById('options-button-reset-header')
+  if (typeof browser !== "undefined") {
+  console.log("browser");
+} else {
+  console.log("chrome");
+  browser = chrome;
+}
+w.addEventListener("load", function () {
+  optionsIgnoreNonHTTP = d.getElementById("options-ignore-non-http");
+  optionsIgnorePinned = d.getElementById("options-ignore-pinned");
+  optionsFormatCustom = d.getElementById("options-format-custom");
+  optionsButtonResetFormat = d.getElementById("options-button-reset-format");
+  optionsFilterTabs = d.getElementById("options-filter-tabs");
+  optionsCustomHeader = d.getElementById("options-custom-header");
+  optionsButtonResetHeader = d.getElementById("options-button-reset-header");
 
-  optionsIgnoreNonHTTP.addEventListener('change', function () {
-    saveOptions()
-  })
+  optionsIgnoreNonHTTP.addEventListener("change", function () {
+    saveOptions();
+  });
 
-  optionsIgnorePinned.addEventListener('change', function () {
-    saveOptions()
-  })
+  optionsIgnorePinned.addEventListener("change", function () {
+    saveOptions();
+  });
 
-  optionsButtonResetFormat.addEventListener('click', function () {
-    optionsFormatCustom.value = ''
-    saveOptions()
-    setOptionsButtonResetFormatVisibility()
-  })
+  optionsButtonResetFormat.addEventListener("click", function () {
+    optionsFormatCustom.value = "";
+    saveOptions();
+    setOptionsButtonResetFormatVisibility();
+  });
 
-  optionsFormatCustom.addEventListener('input', function () {
-    saveOptions()
-    setOptionsButtonResetFormatVisibility()
-  })
+  optionsFormatCustom.addEventListener("input", function () {
+    saveOptions();
+    setOptionsButtonResetFormatVisibility();
+  });
 
-  optionsFilterTabs.addEventListener('change', function () {
-    saveOptions()
-  })
+  optionsFilterTabs.addEventListener("change", function () {
+    saveOptions();
+  });
 
-  optionsButtonResetHeader.addEventListener('click', function () {
-    optionsCustomHeader.value = ''
-    saveOptions()
-    setOptionsButtonResetHeaderVisibility()
-  })
+  optionsButtonResetHeader.addEventListener("click", function () {
+    optionsCustomHeader.value = "";
+    saveOptions();
+    setOptionsButtonResetHeaderVisibility();
+  });
 
-  optionsCustomHeader.addEventListener('input', function () {
-    saveOptions()
-    setOptionsButtonResetHeaderVisibility()
-  })
+  optionsCustomHeader.addEventListener("input", function () {
+    saveOptions();
+    setOptionsButtonResetHeaderVisibility();
+  });
 
-  restoreOptions()
-  localization()
-})
+  restoreOptions();
+  localization();
+});
 
-function setOptionsButtonResetFormatVisibility () {
-  if (optionsFormatCustom.value !== '') {
-    optionsButtonResetFormat.classList.remove('hidden')
+function setOptionsButtonResetFormatVisibility() {
+  if (optionsFormatCustom.value !== "") {
+    optionsButtonResetFormat.classList.remove("hidden");
   } else {
-    optionsButtonResetFormat.classList.add('hidden')
+    optionsButtonResetFormat.classList.add("hidden");
   }
 }
 
-function setOptionsButtonResetHeaderVisibility () {
-  if (optionsCustomHeader.value !== '') {
-    optionsButtonResetHeader.classList.remove('hidden')
+function setOptionsButtonResetHeaderVisibility() {
+  if (optionsCustomHeader.value !== "") {
+    optionsButtonResetHeader.classList.remove("hidden");
   } else {
-    optionsButtonResetHeader.classList.add('hidden')
+    optionsButtonResetHeader.classList.add("hidden");
   }
 }
 
-function restoreOptions () {
-  let gettingItem = browser.storage.local.get(defaultOptions)
+function restoreOptions() {
+  chrome.storage.local.get(defaultOptions, function (items) {
+    optionsIgnoreNonHTTP.checked = items.options.ignoreNonHTTP;
+    optionsIgnorePinned.checked = items.options.ignorePinned;
+    optionsFormatCustom.value = items.options.formatCustom;
+    optionsFilterTabs.checked = items.options.filterTabs;
+    optionsCustomHeader.value = items.options.customHeader;
 
-  gettingItem.then(function (items) {
-    optionsIgnoreNonHTTP.checked = items.options.ignoreNonHTTP
-    optionsIgnorePinned.checked = items.options.ignorePinned
-    optionsFormatCustom.value = items.options.formatCustom
-    optionsFilterTabs.checked = items.options.filterTabs
-    optionsCustomHeader.value = items.options.customHeader
-
-    setOptionsButtonResetFormatVisibility()
-    setOptionsButtonResetHeaderVisibility()
-  })
+    setOptionsButtonResetFormatVisibility();
+    setOptionsButtonResetHeaderVisibility();
+  });
 }
 
-function saveOptions () {
+function saveOptions() {
   browser.storage.local.set({
-    'options': {
+    options: {
       ignoreNonHTTP: optionsIgnoreNonHTTP.checked,
       ignorePinned: optionsIgnorePinned.checked,
       formatCustom: optionsFormatCustom.value,
       filterTabs: optionsFilterTabs.checked,
-      customHeader: optionsCustomHeader.value
-    }
-  })
+      customHeader: optionsCustomHeader.value,
+    },
+  });
 }

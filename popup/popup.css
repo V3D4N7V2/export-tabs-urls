@@ -73,7 +73,7 @@ header h1 {
 }
 .popup-button-settings {
     background-size: 30px 30px;
-    background: url('../img/settings.svg') no-repeat center center;
+    background: url('../img/settings.png') no-repeat center center;
     border: none;
     display: inline-block;
     height: 20px;
@@ -83,7 +83,7 @@ header h1 {
 }
 
 .popup-filter-tabs {
-    background: url('../img/filter.svg') no-repeat .5rem center;
+    background: url('../img/filter.png') no-repeat .5rem center;
     background-size: 1.1rem 1.1rem;
     border: 1px solid #ccc;
     border-bottom: none;
@@ -178,8 +178,8 @@ footer span.disabled::before {
     vertical-align: -.1rem;
 }
 .popup-button-copy::before {
-    background: url('../img/copy-to-clipboard.svg') no-repeat;
+    background: url('../img/copy-to-clipboard.png') no-repeat;
 }
 .popup-button-export::before {
-    background: url('../img/export-as-file.svg') no-repeat;
+    background: url('../img/export-as-file.png') no-repeat;
 }
