@@ -17,7 +17,7 @@ jobs:
       - name: Build the extension
         run: |
           # Create a build directory
-          mkdir build
+          # mkdir build
           # Copy all files from the extension directory to the build directory
           # cp -r * build/
           rsync -av --progress * /build --exclude build
