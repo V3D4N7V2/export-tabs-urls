@@ -10,24 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Check out the repository
-      - uses: actions/checkout@v2
-
-      # Install dependencies
-      - name: Install dependencies
-        run: npm install
-
-      # Build the extension
-      - name: Build the extension
-        run: npm run build
-
-      # Pack the extension as a CRX file using webext-buildtools-chrome-crx-action
-      - name: Pack the extension as a CRX file
-        uses: cardinalby/webext-buildtools-chrome-crx-action@v2
-        with:
-          zipFilePath: 'build/extension.zip'
-          crxFilePath: 'build/extension.crx'
-          privateKey: ${{ secrets.CHROME_CRX_PRIVATE_KEY }}
+  - id: packExtensionDir
+    uses: cardinalby/webext-buildtools-pack-extension-dir-action@v1
+    with:
+      extensionDir: 'extension'
+      zipFilePath: 'build/extension.zip'
+  - uses: cardinalby/webext-buildtools-chrome-crx-action@v2
+    with:
+      # zip file made at the packExtensionDir step
+      zipFilePath: 'build/extension.zip'
+      crxFilePath: 'build/extension.crx'
+      privateKey: ${{ secrets.CHROME_CRX_PRIVATE_KEY }}
 
       # Upload the CRX file as an artifact
       - name: Upload the CRX file as an artifact
