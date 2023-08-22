@@ -20,7 +20,7 @@ jobs:
           # mkdir build
           # Copy all files from the extension directory to the build directory
           # cp -r * build/
-          rsync -av --progress * /build --exclude build
+          rsync -av --progress * build --exclude build
 
       # Pack the extension as a CRX file using webext-buildtools-chrome-crx-action
       - name: Pack the extension as a CRX file
